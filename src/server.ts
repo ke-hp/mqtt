@@ -10,7 +10,8 @@ import * as Debug from "debug";
 const debug: any = Debug("mqtt:server");
 import * as dotenv from "dotenv";
 dotenv.config();
-import * as mosca from "mosca";
+// import * as mosca from "mosca";
+const mosca = require("mosca");
 import {
   authenticate,
   authorizePublish,
