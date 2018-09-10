@@ -36,4 +36,4 @@ RUN tsc
 
 # Start the web app
 ENTRYPOINT ["/app/start.sh"]
-CMD ["node","dist/server.js"] 
+CMD ["node","dist/server.js"]
