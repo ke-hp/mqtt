@@ -1,0 +1,48 @@
+{
+  "name": "mqtt",
+  "version": "1.0.0",
+  "description": "cloud",
+  "scripts": {
+    "start": "tslint --fix src/**/*.ts tsc && node dist/server.js",
+    "lint-fix": "tslint --fix src/**/*.ts",
+    "lint": "tslint src/**/*.ts",
+    "commit": "commit-wizard"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/longwdl/nradio_it_cloud_mqtt.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/longwdl/nradio_it_cloud_mqtt/issues"
+  },
+  "homepage": "https://github.com/longwdl/nradio_it_cloud_mqtt#readme",
+  "dependencies": {
+    "@types/debug": "0.0.30",
+    "@types/dotenv": "^4.0.3",
+    "@types/mosca": "^2.8.1",
+    "@types/redis": "^2.8.6",
+    "debug": "^3.1.0",
+    "dotenv": "^5.0.0",
+    "mosca": "^2.7.0",
+    "pre-git": "^3.17.1",
+    "redis": "^2.8.0",
+    "typescript": "^3.0.1"
+  },
+  "devDependencies": {
+    "@types/node": "^10.7.1"
+  },
+  "config": {
+    "pre-git": {
+      "commit-msg": "",
+      "pre-commit": [
+        "npm run lint-fix"
+      ],
+      "pre-push": [],
+      "post-commit": [],
+      "post-checkout": [],
+      "post-merge": []
+    }
+  }
+}

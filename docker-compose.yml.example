@@ -1,0 +1,20 @@
+version: "3"
+services:
+  mqtt:
+    build: .
+    privileged: false
+    restart: always
+    depends_on:
+      - redis
+    environment:
+      - VIRTUAL_HOST=example.com
+      - MQTT_USERNAME=nradio
+      - MQTT_PASSWORD=nradio
+      - MQTT_REDIS_HOST=redis
+      - MQTT_REDIS_PORT=6379
+      - MQTT_MOSCA_PORT=1883
+      - MQTT_MOSCA_ID=mosca
+  redis:
+    image: redis:4.0.0
+    privileged: false
+    restart: always
