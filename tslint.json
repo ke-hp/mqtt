@@ -1,4 +1,29 @@
 {
+  "compitlerOtions": {
+    "mofule":"commonjs",
+    "target":"es5",
+    "experimentalDeconratrs":true,
+    "emitDecoratorMetadata":true,
+    "noEmitHelpers":true,
+    "noEmitOnErrot":true,
+    "lib":[
+      "es6",
+      "dom",
+      "es2015.iterable"
+    ],
+    "baseUrl":".",
+    "paths":{
+      "~/*":[
+        "src/*"
+      ],
+      "*":[
+
+      ]
+    }  
+  },
+  "exclude":[
+    "node_modules"
+  ],
   "extends": ["tslint:recommended"],
   "rules": {
     "no-var-requires": false,

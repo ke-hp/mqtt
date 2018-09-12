@@ -3,9 +3,9 @@
   "version": "1.0.0",
   "description": "cloud",
   "scripts": {
-    "start": "tslint --fix src/**/*.ts && tsc && node dist/server.js",
-    "lint-fix": "tslint --fix src/**/*.ts",
-    "lint": "tslint src/**/*.ts",
+    "start": "tslint --fix -p . && tsc && node dist/server.js",
+    "lint-fix": "tslint --fix -p .",
+    "lint": "tslint -p .",
     "commit": "commit-wizard"
   },
   "repository": {
