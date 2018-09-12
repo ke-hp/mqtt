@@ -15,8 +15,8 @@ const authenticate: any = (
 		flag = true;
 
 		if (
-			username === process.env.MQTT_USERNAME &&
-			password === process.env.MQTT_PASSWORD
+			username == process.env.MQTT_USERNAME &&
+			password == process.env.MQTT_PASSWORD
 		) {
 			client.super_user = true;
 		}
@@ -37,15 +37,15 @@ const authorizePublish: any = (
 	let flag = false;
 	const tops = topic.split("/");
 
-	if (client.super_user || client.id === tops[0]) {
+	if (client.super_user || client.id == tops[0]) {
 		flag = true;
-	} else if (tops.length >= 3 && "kp" === tops[0] && client.id === tops[2]) {
+	} else if (tops.length >= 3 && "kp" == tops[0] && client.id == tops[2]) {
 		flag = true;
 	} else if (
 		tops.length >= 4 &&
-		"$SYS" === tops[0] &&
-		"broker" === tops[1] &&
-		"connection" === tops[2]
+		"$SYS" == tops[0] &&
+		"broker" == tops[1] &&
+		"connection" == tops[2]
 	) {
 		flag = true;
 	}
@@ -57,11 +57,11 @@ const authorizeSubscribe: any = (client: any, topic: any, callback: any) => {
 	let flag = false;
 	const tops = topic.split("/");
 
-	if (client.super_user || client.id === tops[0]) {
+	if (client.super_user || client.id == tops[0]) {
 		flag = true;
-	} else if (tops.length >= 3 && "kp" === tops[0] && client.id === tops[1]) {
+	} else if (tops.length >= 3 && "kp" == tops[0] && client.id == tops[1]) {
 		flag = true;
-	} else if (tops.length >= 3 && "kp" === tops[0] && "FFFFFFFFFFFF" === tops[1]) {
+	} else if (tops.length >= 3 && "kp" == tops[0] && "FFFFFFFFFFFF" == tops[1]) {
 		flag = true;
 	}
 
