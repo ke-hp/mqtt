@@ -37,7 +37,7 @@ const authorizePublish: any = (
 	let flag = false;
 	const tops = topic.split("/");
 
-	if (client.super_user || client.id === topic.split("/")[0]) {
+	if (client.super_user || client.id === tops[0]) {
 		flag = true;
 	} else if (tops.length >= 3 && "kp" === tops[0] && client.id === tops[2]) {
 		flag = true;
@@ -55,8 +55,13 @@ const authorizePublish: any = (
 
 const authorizeSubscribe: any = (client: any, topic: any, callback: any) => {
 	let flag = false;
+	const tops = topic.split("/");
 
-	if (client.super_user || client.id === topic.split("/")[0]) {
+	if (client.super_user || client.id === tops[0]) {
+		flag = true;
+	} else if (tops.length >= 3 && "kp" === tops[0] && client.id === tops[1]) {
+		flag = true;
+	} else if (tops.length >= 3 && "kp" === tops[0] && "FFFFFFFFFFFF" === tops[1]) {
 		flag = true;
 	}
 
