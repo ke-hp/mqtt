@@ -68,8 +68,7 @@ server.on("subscribed", (topic: any, client: any) => {
 							debug("onl:cmd: done!");
 										});
 								}, 5000);
-							},
-							);
+							});
 		}
 	}}
 });
