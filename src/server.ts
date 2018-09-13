@@ -29,6 +29,7 @@ const moscaSetting = {
 	id: process.env.MQTT_MOSCA_ID,
 	port: process.env.MQTT_MOSCA_PORT - 0,
 };
+console.log("33333333333333");
 
 const server = new mosca.Server(moscaSetting);
 

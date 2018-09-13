@@ -7,6 +7,7 @@ const authenticate: any = (
 	password: any,
 	callback: any,
 ) => {
+	console.log("2333333333333");
 	console.log("222", client.id);
 	debug("authenticate:", client.id);
 	let flag = false;
