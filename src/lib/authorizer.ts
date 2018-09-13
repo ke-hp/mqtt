@@ -65,6 +65,7 @@ const authorizeSubscribe: any = (client: any, topic: any, callback: any) => {
 	} else if (tops.length >= 3 && "kp" === tops[0] && "FFFFFFFFFFFF" === tops[1]) {
 		flag = true;
 	}
+	console.log("2222222", flag);
 
 	callback(null, flag);
 };
