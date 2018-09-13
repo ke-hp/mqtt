@@ -58,7 +58,7 @@ server.on("clientConnected", (client: any) => {
 					server.publish(message, () => {
 						debug("onl:cmd: done!");
 					});
-				}, Math.floor(Math.random() * (19) + 10) * 1000);
+				}, Math.floor(Math.random() * (9) + 10) * 1000);
 			},
 		);
 	}
