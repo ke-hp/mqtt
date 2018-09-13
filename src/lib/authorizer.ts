@@ -8,7 +8,7 @@ const authenticate: any = (
 	callback: any,
 ) => {
 	console.log(username);
-	console.log(password);
+	console.log(password.toString());
 	debug("authenticate:", client.id);
 	let flag = false;
 
@@ -18,7 +18,7 @@ const authenticate: any = (
 
 		if (
 			username === process.env.MQTT_USERNAME &&
-			password === process.env.MQTT_PASSWORD
+			password.toString() === process.env.MQTT_PASSWORD
 		) {
 			client.super_user = true;
 		}
@@ -30,7 +30,7 @@ const authenticate: any = (
 	// console.log("111111111111111111", client);
 	console.log("111111111111111111", username);
 	console.log("111111111111111111", password);
-	console.log("111111111111111111", flag);
+	console.log("111111111111111111", client.super_user);
 	callback(null, flag);
 };
 
