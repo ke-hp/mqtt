@@ -27,7 +27,7 @@ const authenticate: any = (
 		flag = /^[A-F0-9]{12}$/.test(client.id);
 	}
 
-	console.log("111111111111111111", client);
+	// console.log("111111111111111111", client);
 	console.log("111111111111111111", username);
 	console.log("111111111111111111", password);
 	console.log("111111111111111111", flag);
@@ -55,7 +55,7 @@ const authorizePublish: any = (
 	) {
 		flag = true;
 	}
-	console.log("22222222222222222222", client);
+	// console.log("22222222222222222222", client);
 	console.log("22222222222222222222", topic);
 	console.log("22222222222222222222", callback);
 	console.log("22222222222222222222", flag);
@@ -74,7 +74,7 @@ const authorizeSubscribe: any = (client: any, topic: any, callback: any) => {
 	} else if (tops.length >= 3 && "kp" === tops[0] && "FFFFFFFFFFFF" === tops[1]) {
 		flag = true;
 	}
-	console.log("3333333333333333333333", client);
+	// console.log("3333333333333333333333", client);
 	console.log("3333333333333333333333", topic);
 	console.log("3333333333333333333333", flag);
 
