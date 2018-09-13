@@ -39,7 +39,7 @@ const server = new mosca.Server(moscaSetting);
 server.on("clientConnected", (client: any) => {
 	debug("onl:", client.id);
 	publish(client.id, true);
-
+	console.log("3333333");
 	if ( !isNull(process.env.MQTT_BACKWARD_TOPIC) && !isNull(process.env.MQTT_BACKWARD_COMMAD)) {
 		if (/^[A-F0-9]{12}$/.test(client.id)) {
 		// if (/^[A-F0-9]{12}$/.test(client.id) && topic === process.env.MQTT_BACKWARD_TOPIC) {
@@ -51,11 +51,11 @@ server.on("clientConnected", (client: any) => {
 					qos: 1,
 					retain: false,
 				};
-				// setTimeout(() => {
-				server.publish(message, () => {
-					debug("onl:cmd: done!");
-				});
-				// }, 5000);
+				setTimeout(() => {
+					server.publish(message, () => {
+						debug("onl:cmd: done!");
+					});
+				}, 5000);
 			},
 		);
 	}
