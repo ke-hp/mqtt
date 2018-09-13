@@ -12,14 +12,14 @@ import * as Debug from "debug";
 const debug: any = Debug("mqtt:server");
 import * as dotenv from "dotenv";
 dotenv.config();
+import { Agent } from "http";
 import * as mosca from "mosca";
+import { isNull } from "util";
 import {
 	authenticate,
 	authorizePublish,
 	authorizeSubscribe,
 } from "./lib/authorizer";
-import { isNull } from "util";
-import { Agent } from "http";
 
 const pubsubBackend = {
 	type: "redis",
@@ -68,12 +68,11 @@ server.on("subscribed", (topic: any, client: any) => {
 							debug("onl:cmd: done!");
 										});
 								}, 5000);
-							}
-							)
-		
-				
+							},
+							);
+
 	}
-			
+
 		}
 
 });
