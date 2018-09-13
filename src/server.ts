@@ -70,11 +70,8 @@ server.on("subscribed", (topic: any, client: any) => {
 								}, 5000);
 							},
 							);
-
-	}
-
 		}
-
+	}}
 });
 
 server.on("published", (packet: any, client: any) => {
