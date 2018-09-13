@@ -34,11 +34,13 @@ const server = new mosca.Server(moscaSetting);
 
 // method
 server.on("clientConnected", (client: any) => {
+	console.log("666666666666", client.id);
 	debug("onl:", client.id);
 	publish(client.id, true);
 });
 
 server.on("clientDisconnected", (client: any) => {
+	console.log("3333333333333", client.id);
 	debug("off:", client.id);
 	publish(client.id, false);
 });
@@ -67,6 +69,7 @@ server.on("subscribed", (topic: any, client: any) => {
 });
 
 server.on("published", (packet: any, client: any) => {
+	console.log("00000000000000", client.id);
 	if (/^[A-F0-9]{12}$/.test(packet.payload)) {
 		debug("published:", packet.topic, packet.payload);
 	}
