@@ -68,7 +68,7 @@ server.on("subscribed", (topic: any, client: any) => {
 				console.log("222222222222222");
 				server.publish(message, () => {
 					console.log("333333333333333333333");
-										debug("onl:cmd: done!");
+					debug("onl:cmd: done!");
 								});
 						}, 5000);
 				// }
