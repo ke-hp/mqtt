@@ -44,7 +44,9 @@ server.on("clientDisconnected", (client: any) => {
 });
 
 server.on("subscribed", (topic: any, client: any) => {
+	console.log("222222222222");
 	if (client) {
+		console.log("33333333333",client.id);
 		debug("sub:", topic, "for", client.id);
 		if (/^[A-F0-9]{12}$/.test(client.id) && topic === `${client.id}/exec/#`) {
 
