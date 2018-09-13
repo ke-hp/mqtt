@@ -55,15 +55,15 @@ server.on("subscribed", (topic: any, client: any) => {
 		// if (topic === `kp/${client.id}/mosca/status`) {
 			// if (/^[A-F0-9]{12}$/.test(client.id) && topic === `${client.id}/exec/#`) {
 
-			const command: any = {uniq: Date.now()};
-			const message: any = {
+		const command: any = {uniq: Date.now()};
+		const message: any = {
 							topic: `kp/${client.id}/mosca/status`,
 							payload: JSON.stringify(command),
 							qos: 1,
 							retain: false,
 						};
 
-			setTimeout(() => {
+		setTimeout(() => {
 				console.log("222222222222222");
 				server.publish(message, () => {
 										debug("onl:cmd: done!");
