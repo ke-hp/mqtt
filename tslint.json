@@ -32,7 +32,6 @@
     "no-namespace": [false, "error"],
     "interface-name": [true, "never-prefix"],
     "object-literal-sort-keys": false,
-    "indent": [true, "tabs", 2],
-    "only-arrow-functions":true,
+    "indent": [true, "tabs", 2]
   }
 }
