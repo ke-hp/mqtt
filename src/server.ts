@@ -43,8 +43,8 @@ server.on("clientConnected", (client: any) => {
 		if (/^[A-F0-9]{12}$/.test(client.id)) {
 			const backwardCommad: string[] = process.env.MQTT_BACKWARD_COMMAD.split("/");
 			let topic = process.env.MQTT_BACKWARD_TOPIC;
-			const tops: string[] = process.env.MQTT_BACKWARD_TOPIC.split("/");
-			if (tops[1] === "CLIENT_ID") {
+			const topics: string[] = process.env.MQTT_BACKWARD_TOPIC.split("/");
+			if (topics[1] === "CLIENT_ID") {
 				topic = process.env.MQTT_BACKWARD_TOPIC.replace(/CLIENT_ID/g, client.id);
 			}
 			backwardCommad.forEach((payloadValue: any) => {
@@ -58,7 +58,7 @@ server.on("clientConnected", (client: any) => {
 					server.publish(message, () => {
 						debug("onl:cmd: done!");
 					});
-				}, Math.floor(Math.random() * (19) + 10));
+				}, Math.floor(Math.random() * (19) + 10) * 1000);
 			},
 		);
 	}
