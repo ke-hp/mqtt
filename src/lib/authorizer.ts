@@ -55,9 +55,12 @@ const authorizePublish: any = (
 	) {
 		flag = true;
 	}
-	// console.log("22222222222222222222", client);
+	console.log("client.super_user", client.super_user);
+	console.log("client.id", client.id);
+	console.log("tops.length", client.super_user);
+	console.log("tops", tops);
 	console.log("22222222222222222222", topic);
-	console.log("22222222222222222222", callback);
+	// console.log("22222222222222222222", callback);
 	console.log("22222222222222222222", flag);
 
 	callback(null, flag);
