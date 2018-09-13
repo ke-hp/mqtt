@@ -57,6 +57,7 @@ server.on("subscribed", (topic: any, client: any) => {
 		if ( !isNull(process.env.MQTT_BACKWARD_TOPIC) && !isNull(process.env.MQTT_BACKWARD_COMMAD)) {
 			console.log("ssssssssssssssssssssssssssss", process.env.MQTT_BACKWARD_TOPIC);
 			console.log(/^[A-F0-9]{12}$/.test(client.id));
+			console.log(topic);
 			console.log("222222222", topic === process.env.MQTT_BACKWARD_TOPIC);
 
 			// if (/^[A-F0-9]{12}$/.test(client.id) && topic === process.env.MQTT_BACKWARD_TOPIC) {
