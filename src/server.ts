@@ -67,6 +67,7 @@ server.on("subscribed", (topic: any, client: any) => {
 		setTimeout(() => {
 				console.log("222222222222222");
 				server.publish(message, () => {
+					console.log("333333333333333333333");
 										debug("onl:cmd: done!");
 								});
 						}, 5000);
