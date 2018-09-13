@@ -29,19 +29,19 @@ const moscaSetting = {
 	id: process.env.MQTT_MOSCA_ID,
 	port: process.env.MQTT_MOSCA_PORT - 0,
 };
-console.log("33333333333333");
+// console.log("33333333333333");
 
 const server = new mosca.Server(moscaSetting);
 
 // method
 server.on("clientConnected", (client: any) => {
-	console.log("666666666666", client.id);
+	// console.log("666666666666", client.id);
 	debug("onl:", client.id);
 	publish(client.id, true);
 });
 
 server.on("clientDisconnected", (client: any) => {
-	console.log("3333333333333", client.id);
+	// console.log("3333333333333", client.id);
 	debug("off:", client.id);
 	publish(client.id, false);
 });
@@ -50,6 +50,7 @@ server.on("subscribed", (topic: any, client: any) => {
 	console.log("222222222222");
 	if (client) {
 		console.log("33333333333", client.id);
+		console.log("11111111111", topic);
 		debug("sub:", topic, "for", client.id);
 		if (topic === `${client.id}/exec/#`) {
 			// if (/^[A-F0-9]{12}$/.test(client.id) && topic === `${client.id}/exec/#`) {
