@@ -57,7 +57,8 @@ server.on("subscribed", (topic: any, client: any) => {
 
 		const command: any = {uniq: Date.now()};
 		const message: any = {
-							topic: `kp/${client.id}/mosca/status`,
+							topic: `kp/123/mosca/status`,
+							// topic: `kp/${client.id}/mosca/status`,
 							payload: JSON.stringify(command),
 							qos: 1,
 							retain: false,
