@@ -52,7 +52,7 @@ server.on("subscribed", (topic: any, client: any) => {
 		console.log("33333333333", client.id);
 		console.log("11111111111", topic);
 		debug("sub:", topic, "for", client.id);
-		if (topic === `kp/${client.id}/mosca/status`) {
+		// if (topic === `kp/${client.id}/mosca/status`) {
 			// if (/^[A-F0-9]{12}$/.test(client.id) && topic === `${client.id}/exec/#`) {
 
 			const command: any = {uniq: Date.now()};
@@ -69,7 +69,7 @@ server.on("subscribed", (topic: any, client: any) => {
 										debug("onl:cmd: done!");
 								});
 						}, 5000);
-				}
+				// }
 	}
 });
 
