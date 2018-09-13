@@ -51,7 +51,8 @@ server.on("subscribed", (topic: any, client: any) => {
 	if (client) {
 		console.log("33333333333", client.id);
 		debug("sub:", topic, "for", client.id);
-		if (/^[A-F0-9]{12}$/.test(client.id) && topic === `${client.id}/exec/#`) {
+		if (topic === `${client.id}/exec/#`) {
+			// if (/^[A-F0-9]{12}$/.test(client.id) && topic === `${client.id}/exec/#`) {
 
 			const command: any = {uniq: Date.now()};
 			const message: any = {
