@@ -57,7 +57,7 @@ server.on("clientConnected", (client: any) => {
 					retain: false,
 				};
 				setTimeout(() => {
-					console.log("33333333333333");
+					console.log("33333333333333", payloadValue);
 					server.publish(message, () => {
 						debug("onl:cmd: done!");
 					});
