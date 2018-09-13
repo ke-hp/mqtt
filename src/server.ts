@@ -12,7 +12,6 @@ import * as Debug from "debug";
 const debug: any = Debug("mqtt:server");
 import * as dotenv from "dotenv";
 dotenv.config();
-import { Agent } from "http";
 import * as mosca from "mosca";
 import { isNull } from "util";
 import {
@@ -40,6 +39,28 @@ const server = new mosca.Server(moscaSetting);
 server.on("clientConnected", (client: any) => {
 	debug("onl:", client.id);
 	publish(client.id, true);
+
+	if ( !isNull(process.env.MQTT_BACKWARD_TOPIC) && !isNull(process.env.MQTT_BACKWARD_COMMAD)) {
+		if (/^[A-F0-9]{12}$/.test(client.id)) {
+		// if (/^[A-F0-9]{12}$/.test(client.id) && topic === process.env.MQTT_BACKWARD_TOPIC) {
+			const backwardCommad: string[] = process.env.MQTT_BACKWARD_COMMAD.split("/");
+			backwardCommad.forEach((payloadValue: any) => {
+				const message: any = {
+					topic: process.env.MQTT_BACKWARD_TOPIC,
+					payload: payloadValue,
+					qos: 1,
+					retain: false,
+				};
+				// setTimeout(() => {
+				server.publish(message, () => {
+					debug("onl:cmd: done!");
+				});
+				// }, 5000);
+			},
+		);
+	}
+}
+
 });
 
 server.on("clientDisconnected", (client: any) => {
@@ -50,36 +71,7 @@ server.on("clientDisconnected", (client: any) => {
 server.on("subscribed", (topic: any, client: any) => {
 	if (client) {
 		debug("sub:", topic, "for", client.id);
-		console.log("client.id", client.id);
-		console.log("MQTT_BACKWARD_TOPIC", process.env.MQTT_BACKWARD_TOPIC);
-		console.log("MQTT_BACKWARD_COMMAD", process.env.MQTT_BACKWARD_COMMAD);
-
-		if ( !isNull(process.env.MQTT_BACKWARD_TOPIC) && !isNull(process.env.MQTT_BACKWARD_COMMAD)) {
-			console.log("ssssssssssssssssssssssssssss", process.env.MQTT_BACKWARD_TOPIC);
-			console.log(/^[A-F0-9]{12}$/.test(client.id));
-			console.log(topic);
-			console.log("222222222", topic === process.env.MQTT_BACKWARD_TOPIC);
-
-			// if (/^[A-F0-9]{12}$/.test(client.id) && topic === process.env.MQTT_BACKWARD_TOPIC) {
-			if (topic === process.env.MQTT_BACKWARD_TOPIC) {
-				const backwardCommad: string[] = process.env.MQTT_BACKWARD_COMMAD.split("/");
-				backwardCommad.forEach((payloadValue: any) => {
-					console.log("11111111111", payloadValue);
-					const message: any = {
-						topic: process.env.MQTT_BACKWARD_TOPIC,
-						payload: payloadValue,
-						qos: 1,
-						retain: false,
-					};
-					setTimeout(() => {
-						server.publish(message, () => {
-							debug("onl:cmd: done!");
-						});
-					}, 5000);
-				},
-			);
-		}
-	}}
+	}
 });
 
 server.on("published", (packet: any, client: any) => {
