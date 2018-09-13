@@ -70,7 +70,7 @@ server.on("subscribed", (topic: any, client: any) => {
 });
 
 server.on("published", (packet: any, client: any) => {
-	console.log("00000000000000", client.id);
+	// console.log("00000000000000", client.id);
 	if (/^[A-F0-9]{12}$/.test(packet.payload)) {
 		debug("published:", packet.topic, packet.payload);
 	}
