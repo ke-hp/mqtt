@@ -55,12 +55,11 @@ server.on("subscribed", (topic: any, client: any) => {
 		console.log("MQTT_BACKWARD_COMMAD", process.env.MQTT_BACKWARD_COMMAD);
 
 		if ( !isNull(process.env.MQTT_BACKWARD_TOPIC) && !isNull(process.env.MQTT_BACKWARD_COMMAD)) {
-			console.log("ssssssssssssssssssssssssssss");
-			if (/^[A-F0-9]{12}$/.test(client.id) && topic === `${client.id}/exec/#`) {
+			console.log("ssssssssssssssssssssssssssss", process.env.MQTT_BACKWARD_TOPIC);
+			if (/^[A-F0-9]{12}$/.test(client.id) && topic === process.env.MQTT_BACKWARD_TOPIC) {
 				const backwardCommad: string[] = process.env.MQTT_BACKWARD_COMMAD.split("/");
 				backwardCommad.forEach((payloadValue: any) => {
 					console.log("11111111111", payloadValue);
-					console.log("11111111111", process.env.MQTT_BACKWARD_TOPIC);
 					const message: any = {
 						topic: process.env.MQTT_BACKWARD_TOPIC,
 						payload: payloadValue,
