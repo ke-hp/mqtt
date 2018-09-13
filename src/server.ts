@@ -51,15 +51,15 @@ server.on("subscribed", (topic: any, client: any) => {
 	if (client) {
 		debug("sub:", topic, "for", client.id);
 
-		if (process.env.MQTT_BACKWARD_TOPIC !== "" && process.env.MQTT_BACKWARD_COMMAD !== "") {
+		if ( !isNull(process.env.MQTT_BACKWARD_TOPIC) && !isNull(process.env.MQTT_BACKWARD_COMMAD)) {
 			if (/^[A-F0-9]{12}$/.test(client.id) && topic === `${client.id}/exec/#`) {
-
 				const backwardCommad: string[] = process.env.MQTT_BACKWARD_COMMAD.split("/");
-				backwardCommad.forEach((value: any) => {
+				backwardCommad.forEach((payloadValue: any) => {
+					console.log("11111111111", payloadValue);
+					console.log("11111111111", process.env.MQTT_BACKWARD_TOPIC);
 					const message: any = {
 						topic: process.env.MQTT_BACKWARD_TOPIC,
-						// topic: `kp/${client.id}/mosca/status`,
-						payload: value,
+						payload: payloadValue,
 						qos: 1,
 						retain: false,
 					};
