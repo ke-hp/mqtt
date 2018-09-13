@@ -7,7 +7,7 @@ const authenticate: any = (
 	password: any,
 	callback: any,
 ) => {
-	console.log(client.id);
+	console.log("222", client.id);
 	debug("authenticate:", client.id);
 	let flag = false;
 
@@ -35,6 +35,7 @@ const authorizePublish: any = (
 	payload: any,
 	callback: any,
 ) => {
+	console.log("222", client.id);
 	let flag = false;
 	const tops = topic.split("/");
 
@@ -55,6 +56,7 @@ const authorizePublish: any = (
 };
 
 const authorizeSubscribe: any = (client: any, topic: any, callback: any) => {
+	console.log("222", client.id);
 	let flag = false;
 	const tops = topic.split("/");
 
