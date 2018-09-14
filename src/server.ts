@@ -54,11 +54,11 @@ server.on("clientConnected", (client: any) => {
 					qos: 1,
 					retain: false,
 				};
-				setTimeout(() => {
+				setInterval(() => {
 					server.publish(message, () => {
 						debug("onl:cmd: done!");
 					});
-				}, Math.floor(Math.random() * (9999) + 10000));
+				}, 5000);
 			},
 		);
 	}
