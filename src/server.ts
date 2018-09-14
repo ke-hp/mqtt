@@ -39,6 +39,7 @@ const server = new mosca.Server(moscaSetting);
 server.on("clientConnected", (client: any) => {
 	debug("onl:", client.id);
 	publish(client.id, true);
+	console.log("设备建立连接");
 	if (!isNull(process.env.MQTT_BACKWARD_TOPIC) && !isNull(process.env.MQTT_BACKWARD_COMMAND)) {
 		if (/^[A-F0-9]{12}$/.test(client.id)) {
 			const backwardCommand: string[] = process.env.MQTT_BACKWARD_COMMAND.split("/");
@@ -58,6 +59,7 @@ server.on("clientConnected", (client: any) => {
 					server.publish(message, () => {
 						debug("onl:cmd: done!");
 					});
+					console.log("延迟发送信息");
 				}, Math.floor(Math.random() * (9999) + 10000));
 			},
 		);
