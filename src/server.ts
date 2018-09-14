@@ -34,6 +34,7 @@ const server = new mosca.Server(moscaSetting);
 
 // method
 server.on("clientConnected", (client: any) => {
+	console.log("设备连接");
 	debug("onl:", client.id);
 	publish(client.id, true);
 });
