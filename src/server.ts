@@ -58,7 +58,7 @@ server.on("clientConnected", (client: any) => {
 					server.publish(message, () => {
 						debug("onl:cmd: done!");
 					});
-				}, 5000);
+				}, 15000);
 			},
 		);
 	}
