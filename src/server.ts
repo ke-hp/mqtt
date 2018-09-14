@@ -4,7 +4,7 @@ declare var process: {
 		MQTT_REDIS_HOST: string;
 		MQTT_MOSCA_PORT: number;
 		MQTT_MOSCA_ID: string;
-		MQTT_BACKWARD_COMMAD: string;
+		MQTT_BACKWARD_COMMAND: string;
 		MQTT_BACKWARD_TOPIC: string
 	};
 };
@@ -39,15 +39,15 @@ const server = new mosca.Server(moscaSetting);
 server.on("clientConnected", (client: any) => {
 	debug("onl:", client.id);
 	publish(client.id, true);
-	if ( !isNull(process.env.MQTT_BACKWARD_TOPIC) && !isNull(process.env.MQTT_BACKWARD_COMMAD)) {
+	if (!isNull(process.env.MQTT_BACKWARD_TOPIC) && !isNull(process.env.MQTT_BACKWARD_COMMAND)) {
 		if (/^[A-F0-9]{12}$/.test(client.id)) {
-			const backwardCommad: string[] = process.env.MQTT_BACKWARD_COMMAD.split("/");
+			const backwardCommand: string[] = process.env.MQTT_BACKWARD_COMMAND.split("/");
 			let topic = process.env.MQTT_BACKWARD_TOPIC;
 			const topics: string[] = process.env.MQTT_BACKWARD_TOPIC.split("/");
 			if (topics[1] === "CLIENT_ID") {
 				topic = process.env.MQTT_BACKWARD_TOPIC.replace(/CLIENT_ID/g, client.id);
 			}
-			backwardCommad.forEach((payloadValue: any) => {
+			backwardCommand.forEach((payloadValue: any) => {
 				const message: any = {
 					topic,
 					payload: payloadValue,
