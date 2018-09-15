@@ -4,6 +4,8 @@ declare var process: {
 		MQTT_REDIS_HOST: string;
 		MQTT_MOSCA_PORT: number;
 		MQTT_MOSCA_ID: string;
+		MQTT_BACKWARD_COMMAND: string;
+		MQTT_BACKWARD_TOPIC: string
 	};
 };
 import * as Debug from "debug";
@@ -11,6 +13,7 @@ const debug: any = Debug("mqtt:server");
 import * as dotenv from "dotenv";
 dotenv.config();
 import * as mosca from "mosca";
+import { isNull } from "util";
 import {
 	authenticate,
 	authorizePublish,
@@ -36,6 +39,31 @@ const server = new mosca.Server(moscaSetting);
 server.on("clientConnected", (client: any) => {
 	debug("onl:", client.id);
 	publish(client.id, true);
+	if (!isNull(process.env.MQTT_BACKWARD_TOPIC) && !isNull(process.env.MQTT_BACKWARD_COMMAND)) {
+		if (/^[A-F0-9]{12}$/.test(client.id)) {
+			const backwardCommand: string[] = process.env.MQTT_BACKWARD_COMMAND.split("/");
+			let topic = process.env.MQTT_BACKWARD_TOPIC;
+			const topics: string[] = process.env.MQTT_BACKWARD_TOPIC.split("/");
+			if (topics[1] === "CLIENT_ID") {
+				topic = process.env.MQTT_BACKWARD_TOPIC.replace(/CLIENT_ID/g, client.id);
+			}
+			backwardCommand.forEach((payloadValue: any) => {
+				const message: any = {
+					topic,
+					payload: payloadValue,
+					qos: 1,
+					retain: false,
+				};
+				setTimeout(() => {
+					server.publish(message, () => {
+						debug("onl:cmd: done!");
+					});
+				}, Math.floor(Math.random() * (9999) + 10000));
+			},
+		);
+	}
+}
+
 });
 
 server.on("clientDisconnected", (client: any) => {
