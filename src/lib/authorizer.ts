@@ -40,6 +40,8 @@ const authorizePublish: any = (
 ) => {
 	let flag = false;
 	const tops = topic.split("/");
+	console.log(client.id);
+	console.log(tops[0]);
 
 	if (client.super_user || client.id === tops[0]) {
 		flag = true;
