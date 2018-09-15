@@ -24,7 +24,11 @@ const authenticate: any = (
 		// check format as macaddr
 		flag = /^[A-F0-9]{12}$/.test(client.id);
 	}
+	console.log("client.super_user", client.super_user);
+	console.log("flag", flag);
 
+	console.log(password.toString());
+	console.log(username);
 	callback(null, flag);
 };
 
@@ -49,7 +53,7 @@ const authorizePublish: any = (
 	) {
 		flag = true;
 	}
-
+	console.log("flag2", flag);
 	callback(null, flag);
 };
 
@@ -64,6 +68,7 @@ const authorizeSubscribe: any = (client: any, topic: any, callback: any) => {
 	} else if (tops.length >= 3 && "kp" === tops[0] && "FFFFFFFFFFFF" === tops[1]) {
 		flag = true;
 	}
+	console.log("flag3", flag);
 
 	callback(null, flag);
 };
