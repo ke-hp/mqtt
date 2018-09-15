@@ -27,7 +27,7 @@ const authenticate: any = (
 	console.log("client.super_user", client.super_user);
 	console.log("flag", flag);
 
-	console.log(password.toString());
+	console.log();
 	console.log(username);
 	callback(null, flag);
 };
