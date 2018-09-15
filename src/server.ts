@@ -1,113 +1,34 @@
-declare var process: {
-	env: {
-		MQTT_REDIS_PORT: string;
-		MQTT_REDIS_HOST: string;
-		MQTT_MOSCA_PORT: number;
-		MQTT_MOSCA_ID: string;
-		MQTT_BACKWARD_COMMAND: string;
-		MQTT_BACKWARD_TOPIC: string
-	};
-};
-import * as Debug from "debug";
-const debug: any = Debug("mqtt:server");
 import * as dotenv from "dotenv";
 dotenv.config();
-import * as mosca from "mosca";
-import { isNull } from "util";
-import {
-	authenticate,
-	authorizePublish,
-	authorizeSubscribe,
-} from "./lib/authorizer";
+import * as Debug from "debug";
+const debug: any = Debug("mqtt:server");
+import * as mqtt from "mqtt";
+import { persist } from "./persist";
 
-const pubsubBackend = {
-	type: "redis",
-	redis: require("redis"),
-	host: process.env.MQTT_REDIS_HOST,
-	port: process.env.MQTT_REDIS_PORT,
-};
+const client = mqtt.connect(
+	process.env.MQTT_URL,
+	{
+		clientId: process.env.ANA_CLIENT_ID,
+		password: process.env.MQTT_PASSWORD,
+		username: process.env.MQTT_USERNAME,
+	},
+);
 
-const moscaSetting = {
-	backend: pubsubBackend,
-	id: process.env.MQTT_MOSCA_ID,
-	port: process.env.MQTT_MOSCA_PORT - 0,
-};
-
-const server = new mosca.Server(moscaSetting);
-
-// method
-server.on("clientConnected", (client: any) => {
-	debug("onl:", client.id);
-	publish(client.id, true);
-	if (!isNull(process.env.MQTT_BACKWARD_TOPIC) && !isNull(process.env.MQTT_BACKWARD_COMMAND)) {
-		if (/^[A-F0-9]{12}$/.test(client.id)) {
-			const backwardCommand: string[] = process.env.MQTT_BACKWARD_COMMAND.split("/");
-			let topic = process.env.MQTT_BACKWARD_TOPIC;
-			const topics: string[] = process.env.MQTT_BACKWARD_TOPIC.split("/");
-			if (topics[1] === "CLIENT_ID") {
-				topic = process.env.MQTT_BACKWARD_TOPIC.replace(/CLIENT_ID/g, client.id);
-			}
-			backwardCommand.forEach((payloadValue: any) => {
-				const message: any = {
-					topic,
-					payload: payloadValue,
-					qos: 1,
-					retain: false,
-				};
-				setTimeout(() => {
-					server.publish(message, () => {
-						debug("onl:cmd: done!");
-					});
-				}, Math.floor(Math.random() * (9999) + 10000));
-			},
-		);
-	}
-}
-
+client.on("connect", () => {
+	console.log("ana连接上生产的mqtt");
+	debug(">>> connected");
+	client.subscribe("+/exec/#");
+	client.subscribe("+/sysinfo/report/#");
+	client.subscribe(`$SYS/${process.env.MQTT_MOSCA_ID}/clients/state`);
 });
 
-server.on("clientDisconnected", (client: any) => {
-	debug("off:", client.id);
-	publish(client.id, false);
+client.on("message", async (topic: any, message: any) => {
+	debug("message", topic);
+
+	// try {
+	await persist(topic, message);
+	return;
+	// } catch (error) {
+	// 	return error;
+	// }
 });
-
-server.on("subscribed", (topic: any, client: any) => {
-	if (client) {
-		debug("sub:", topic, "for", client.id);
-	}
-});
-
-server.on("published", (packet: any, client: any) => {
-	if (/^[A-F0-9]{12}$/.test(packet.payload)) {
-		debug("published:", packet.topic, packet.payload);
-	}
-	if (client) {
-		debug("pub:", packet.topic, "from", client.id);
-	}
-});
-
-server.on("ready", () => {
-	console.log("Mosca server is up and running");
-	server.authenticate = authenticate;
-	server.authorizePublish = authorizePublish;
-	server.authorizeSubscribe = authorizeSubscribe;
-});
-
-function publish(id: any, state: any) {
-	if (/^[A-F0-9]{12}$/.test(id)) {
-		const message = {
-			topic: `$SYS/${moscaSetting.id}/clients/state`,
-			payload: JSON.stringify({
-				connected: state,
-				mac: id,
-				time: Date.now(),
-			}),
-			qos: 1,
-			retain: false,
-		};
-
-		server.publish(message, () => {
-			debug("server publish:", `clients ${id} connected ${state}!`);
-		});
-	}
-}
