@@ -63,7 +63,7 @@ server.on("published", (packet: any, client: any) => {
 server.on("ready", () => {
 	console.log("Mosca server is up and running");
 	server.authenticate = authenticate;
-	// server.authorizePublish = authorizePublish;
+	server.authorizePublish = authorizePublish;
 	// server.authorizeSubscribe = authorizeSubscribe;
 });
 
