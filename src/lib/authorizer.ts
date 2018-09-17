@@ -12,13 +12,13 @@ const authenticate: any = (
 
 	if (username != null && username.length > 0) {
 		client.super_user = false;
-		flag = true;
-
 		if (
 			username === process.env.MQTT_USERNAME &&
 			password.toString() === process.env.MQTT_PASSWORD
 		) {
+			console.log("我是管理员：", client.super_user);
 			client.super_user = true;
+			flag = true;
 		}
 	} else {
 		// check format as macaddr
