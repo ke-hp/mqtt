@@ -49,7 +49,7 @@ const authorizePublish: any = (
 	) {
 		flag = true;
 	}
-
+	console.log(flag);
 	callback(null, flag);
 };
 
@@ -64,7 +64,7 @@ const authorizeSubscribe: any = (client: any, topic: any, callback: any) => {
 	} else if (tops.length >= 3 && "kp" === tops[0] && "FFFFFFFFFFFF" === tops[1]) {
 		flag = true;
 	}
-
+	console.log(flag);
 	callback(null, flag);
 };
 
