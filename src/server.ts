@@ -34,11 +34,13 @@ const server = new mosca.Server(moscaSetting);
 
 // method
 server.on("clientConnected", (client: any) => {
+	console.log("设备上线");
 	debug("onl:", client.id);
 	publish(client.id, true);
 });
 
 server.on("clientDisconnected", (client: any) => {
+	console.log("设备离线");
 	debug("off:", client.id);
 	publish(client.id, false);
 });
@@ -60,9 +62,9 @@ server.on("published", (packet: any, client: any) => {
 
 server.on("ready", () => {
 	console.log("Mosca server is up and running");
-	server.authenticate = authenticate;
-	server.authorizePublish = authorizePublish;
-	server.authorizeSubscribe = authorizeSubscribe;
+	// server.authenticate = authenticate;
+	// server.authorizePublish = authorizePublish;
+	// server.authorizeSubscribe = authorizeSubscribe;
 });
 
 function publish(id: any, state: any) {
