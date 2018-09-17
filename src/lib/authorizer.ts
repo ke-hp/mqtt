@@ -12,6 +12,10 @@ const authenticate: any = (
 
 	if (username != null && username.length > 0) {
 		client.super_user = false;
+		console.log("password", password.toString());
+		console.log("isername", username);
+		console.log("MQTT_USERNAME",process.env.MQTT_USERNAME);
+		console.log("MQTT_PASSWORD", process.env.MQTT_PASSWORD);
 		if (
 			username === process.env.MQTT_USERNAME &&
 			password.toString() === process.env.MQTT_PASSWORD
