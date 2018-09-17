@@ -23,6 +23,7 @@ const authenticate: any = (
 	} else {
 		// check format as macaddr
 		flag = /^[A-F0-9]{12}$/.test(client.id);
+		console.log("设备的验证", client.id, /^[A-F0-9]{12}$/.test(client.id));
 	}
 
 	callback(null, flag);
