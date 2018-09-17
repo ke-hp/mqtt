@@ -24,8 +24,8 @@ const authenticate: any = (
 			username === process.env.MQTT_USERNAME &&
 			password.toString() === process.env.MQTT_PASSWORD
 		) {
-			console.log("我是管理员：", client.super_user);
 			client.super_user = true;
+			console.log("我是管理员：", client.super_user);
 			flag = true;
 		}
 	} else {
