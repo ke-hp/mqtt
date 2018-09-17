@@ -37,7 +37,9 @@ const authorizePublish: any = (
 ) => {
 	let flag = false;
 	const tops = topic.split("/");
-
+	console.log("tops", tops);
+	console.log("client.id", client.id);
+	console.log("client.super_user", client.super_user);
 	if (client.super_user || client.id === tops[0]) {
 		flag = true;
 	} else if (tops.length >= 3 && "kp" === tops[0] && client.id === tops[2]) {
