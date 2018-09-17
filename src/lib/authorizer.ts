@@ -37,9 +37,6 @@ const authorizePublish: any = (
 ) => {
 	let flag = false;
 	const tops = topic.split("/");
-	console.log("tops", tops);
-	console.log("client.id", client.id);
-	console.log("client.super_user", client.super_user);
 	if (client.super_user || client.id === tops[0]) {
 		flag = true;
 	} else if (tops.length >= 3 && "kp" === tops[0] && client.id === tops[2]) {
@@ -59,12 +56,8 @@ const authorizePublish: any = (
 const authorizeSubscribe: any = (client: any, topic: any, callback: any) => {
 	let flag = false;
 	const tops = topic.split("/");
-	console.log("tops", tops);
-	console.log("client.id", client.id);
-	console.log("client.super_user", client.super_user);
-	console.log(" client.id === tops[0]",  client.id === tops[0]);
 	if (client.super_user || client.id === tops[0]) {
-		console.log("我又订阅的权限");
+		console.log("我有订阅的权限");
 		flag = true;
 	} else if (tops.length >= 3 && "kp" === tops[0] && client.id === tops[1]) {
 		flag = true;

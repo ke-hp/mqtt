@@ -64,7 +64,7 @@ server.on("ready", () => {
 	console.log("Mosca server is up and running");
 	server.authenticate = authenticate;
 	server.authorizePublish = authorizePublish;
-	// server.authorizeSubscribe = authorizeSubscribe;
+	server.authorizeSubscribe = authorizeSubscribe;
 });
 
 function publish(id: any, state: any) {
