@@ -65,7 +65,7 @@ const authorizeSubscribe: any = (client: any, topic: any, callback: any) => {
 		flag = true;
 	}
 	console.log("authorizeSubscribe", flag);
-	callback(null, flag);
+	callback(null, true);
 };
 
 export { authenticate, authorizePublish, authorizeSubscribe };
