@@ -44,5 +44,8 @@
       "post-checkout": [],
       "post-merge": []
     }
+  },
+  "release": {
+    "analyzeCommits": "simple-commit-message"
   }
 }
