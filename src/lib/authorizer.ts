@@ -24,6 +24,8 @@ const authenticate: any = (
 		// check format as macaddr
 		flag = /^[A-F0-9]{12}$/.test(client.id);
 	}
+	console.log("authenticate", flag);
+	console.log("client.id", client.id);
 
 	callback(null, flag);
 };
