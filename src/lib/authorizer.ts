@@ -10,13 +10,13 @@ const authenticate: any = (
 	debug("authenticate:", client.id);
 	let flag = false;
 
-	if (username != null && username.length > 0) {
+	if (username != null && username.length > 0 && (typeof(password) !== "undefined")) {
 		client.super_user = false;
-		console.log("username", username);
+		console.log("11111111111111username", username);
 		try {
-			console.log("password", password.toString());
+			console.log("11111111111111password", password.toString());
 		} catch (e) {
-			console.log("111password", password);
+			console.log("22222222222222password", password);
 		}
 
 		if (
@@ -27,6 +27,7 @@ const authenticate: any = (
 			flag = true;
 		}
 	} else {
+		console.log("正确进入");
 		// check format as macaddr
 		flag = /^[A-F0-9]{12}$/.test(client.id);
 	}
