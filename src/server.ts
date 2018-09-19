@@ -4,6 +4,7 @@ declare var process: {
 		MQTT_REDIS_HOST: string;
 		MQTT_MOSCA_PORT: number;
 		MQTT_MOSCA_ID: string;
+		MQTT_BACKWARD: string;
 	};
 };
 import * as Debug from "debug";
@@ -11,6 +12,7 @@ const debug: any = Debug("mqtt:server");
 import * as dotenv from "dotenv";
 dotenv.config();
 import * as mosca from "mosca";
+import { isNull } from "util";
 import {
 	authenticate,
 	authorizePublish,
@@ -34,13 +36,38 @@ const server = new mosca.Server(moscaSetting);
 
 // method
 server.on("clientConnected", (client: any) => {
-	console.log("设备上线");
 	debug("onl:", client.id);
 	publish(client.id, true);
+	if (!isNull(process.env.MQTT_BACKWARD)) {
+		try {
+			if (/^[A-F0-9]{12}$/.test(client.id)) {
+				const backward: JSON[] = JSON.parse(process.env.MQTT_BACKWARD);
+			 backward.forEach((item: any) => {
+				const topic: any = item.topic.replace(/MQTT_DEV_MAC_MQTT/g, client.id);
+				const payload: string = JSON.stringify(item.payload).replace(/MQTT_SRV_TS_MQTT/g, Date.now().toString());
+
+				const message: any = {
+						topic,
+						payload,
+						qos: 1,
+						retain: false,
+					};
+				setTimeout(() => {
+						server.publish(message, () => {
+							debug("onl:cmd: done!");
+						});
+					}, Math.floor(Math.random() * (9999) + 10000));
+
+				});
+			}
+		} catch (err) {
+			console.error("error", "mqtt clientConnected backward", err);
+		}
+	}
+
 });
 
 server.on("clientDisconnected", (client: any) => {
-	console.log("设备离线");
 	debug("off:", client.id);
 	publish(client.id, false);
 });

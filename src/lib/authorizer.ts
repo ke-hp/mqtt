@@ -12,18 +12,17 @@ const authenticate: any = (
 
 	if (username != null && username.length > 0) {
 		client.super_user = false;
+
 		if (
 			username === process.env.MQTT_USERNAME &&
 			password.toString() === process.env.MQTT_PASSWORD
 		) {
 			client.super_user = true;
-			console.log("我是管理员：", client.super_user);
 			flag = true;
 		}
 	} else {
 		// check format as macaddr
 		flag = /^[A-F0-9]{12}$/.test(client.id);
-		console.log("设备的验证", client.id, /^[A-F0-9]{12}$/.test(client.id));
 	}
 
 	callback(null, flag);
@@ -37,6 +36,7 @@ const authorizePublish: any = (
 ) => {
 	let flag = false;
 	const tops = topic.split("/");
+
 	if (client.super_user || client.id === tops[0]) {
 		flag = true;
 	} else if (tops.length >= 3 && "kp" === tops[0] && client.id === tops[2]) {
@@ -49,23 +49,23 @@ const authorizePublish: any = (
 	) {
 		flag = true;
 	}
-	console.log("authorizePublish", flag);
+
 	callback(null, flag);
 };
 
 const authorizeSubscribe: any = (client: any, topic: any, callback: any) => {
 	let flag = false;
 	const tops = topic.split("/");
+
 	if (client.super_user || client.id === tops[0]) {
-		console.log("我有订阅的权限");
 		flag = true;
 	} else if (tops.length >= 3 && "kp" === tops[0] && client.id === tops[1]) {
 		flag = true;
 	} else if (tops.length >= 3 && "kp" === tops[0] && "FFFFFFFFFFFF" === tops[1]) {
 		flag = true;
 	}
-	console.log("authorizeSubscribe", flag);
-	callback(null, true);
+
+	callback(null, flag);
 };
 
 export { authenticate, authorizePublish, authorizeSubscribe };
