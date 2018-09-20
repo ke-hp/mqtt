@@ -36,7 +36,6 @@ const server = new mosca.Server(moscaSetting);
 
 // method
 server.on("clientConnected", (client: any) => {
-	console.log("设备上线", client.id);
 	debug("onl:", client.id);
 	publish(client.id, true);
 	if (!isNull(process.env.MQTT_BACKWARD)) {

@@ -11,28 +11,23 @@ const authenticate: any = (
 	let flag = false;
 
 	if (username != null && username.length > 0 && (typeof(password) !== "undefined")) {
+		const users: JSON[] = JSON.parse(process.env.MQTT_USERS);
 		client.super_user = false;
-		console.log("11111111111111username", username);
-		try {
-			console.log("11111111111111password", password.toString());
-		} catch (e) {
-			console.log("22222222222222password", password);
-		}
-
-		if (
-			username === process.env.MQTT_USERNAME &&
-			password.toString() === process.env.MQTT_PASSWORD
-		) {
-			client.super_user = true;
+		if (users[username] && password.toString() === users[username]) {
 			flag = true;
+			client.super_user = true;
 		}
+		// if (
+		// 	username === process.env.MQTT_USERNAME &&
+		// 	password.toString() === process.env.MQTT_PASSWORD
+		// ) {
+		// 	flag = true;
+		// 	client.super_user = true;
+		// }
 	} else {
-		console.log("正确进入");
 		// check format as macaddr
 		flag = /^[A-F0-9]{12}$/.test(client.id);
 	}
-	console.log("authenticate", flag);
-	console.log("client.id", client.id);
 
 	callback(null, flag);
 };
