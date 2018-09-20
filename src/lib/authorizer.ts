@@ -11,7 +11,7 @@ const authenticate: any = (
 	let flag = false;
 
 	if (username != null && username.length > 0 && (typeof(password) !== "undefined")) {
-		const users: JSON[] = JSON.parse(process.env.MQTT_USERS);
+		const users: JSON[] = JSON.parse(process.env.MQTT_SUPER_USERS);
 		client.super_user = false;
 		if (users[username] && password.toString() === users[username]) {
 			flag = true;
